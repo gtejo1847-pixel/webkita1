@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Website Lucu Kita</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body onload="showSection('home')">
+
+<nav>
+    <a href="#" onclick="showSection('home')">Home</a>
+    <a href="#" onclick="showSection('gallery')">Galeri</a>
+    <a href="#" onclick="showSection('about')">Tentang Kita</a>
+</nav>
+
+<audio id="musik" loop>
+    <source src="assets/lagu.mp3" type="audio/mpeg">
+</audio>
+<button onclick="toggleMusic()">Play / Pause Musik</button>
+
+<!-- HOME -->
+<section id="home">
+    <h1>Halo, Selamat Datang!</h1>
+    <p>aku suka ketawa kamu, suka foto kamu, dan suka musik 🎶</p>
+    <img src="assets/foto1.jpg" alt="Foto Lucu" width="300" onclick="zoomImage(this.src)">
+</section>
+
+<!-- GALERI -->
+<section id="gallery">
+    <h1>Galeri Foto</h1>
+    <p>Klik foto kalo kamu kangen kenangan kita</p>
+    <div class="gallery">
+        <img src="assets/foto1.jpg" alt="Foto 1" onclick="zoomImage(this.src)">
+        <img src="assets/foto2.jpg" alt="Foto 2" onclick="zoomImage(this.src)">
+        <img src="assets/foto3.jpg" alt="Foto 3" onclick="zoomImage(this.src)">
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+    <h1>Tentang Kita</h1>
+   </p>
+    <p>Suka foto konyol, musik gokil, dan kadang serius kalau perlu 😎</p>
+    <img src="assets/foto2.jpg" alt="Foto Kita" width="250" onclick="zoomImage(this.src)">
+</section>
+
+</body>
+</html>
+body {
+    font-family: 'Comic Sans MS', sans-serif;
+    background: #fffbe6;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    background-color: #ffcc66;
+    padding: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #ff6600;
+    transform: scale(1.1);
+    transition: 0.3s;
+}
+
+section {
+    display: none; /* default hidden */
+    padding: 20px;
+}
+
+section.active {
+    display: block;
+}
+
+h1 {
+    color: #ff6600;
+}
+
+p {
+    font-size: 1.1em;
+}
+
+button {
+    background-color: #ffcc66;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+button:hover {
+    background-color: #ff9966;
+    transform: scale(1.05);
+    transition: 0.3s;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.gallery img {
+    margin: 10px;
+    border-radius: 15px;
+    width: 200px;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.gallery img:hover {
+    transform: scale(1.1);
+}
+// Navigasi antar "halaman"
+function showSection(id) {
+    const sections = document.querySelectorAll('section');
+    sections.forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+}
+
+// Zoom foto
+function zoomImage(src) {
+    let popup = document.createElement('div');
+    popup.style.position = 'fixed';
+    popup.style.top = '0';
+    popup.style.left = '0';
+    popup.style.width = '100%';
+    popup.style.height = '100%';
+    popup.style.background = 'rgba(0,0,0,0.8)';
+    popup.style.display = 'flex';
+    popup.style.justifyContent = 'center';
+    popup.style.alignItems = 'center';
+    popup.style.zIndex = '1000';
+    popup.onclick = function() { document.body.removeChild(popup); };
+
+    let img = document.createElement('img');
+    img.src = src;
+    img.style.maxWidth = '90%';
+    img.style.maxHeight = '90%';
+    img.style.borderRadius = '15px';
+
+    popup.appendChild(img);
+    document.body.appendChild(popup);
+}
+
+// Music control
+function toggleMusic() {
+    const music = document.getElementById('musik');
+    if (music.paused) music.play();
+    else music.pause();
+}
